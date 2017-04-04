@@ -21,14 +21,5 @@ void setup() {
 }
 
 void loop() {
-  for(int j=0; j<100; ++j){
-    for(int i=80; i<=255; ++i){
-      MotorSpeed(i, i);
-      delay(10);
-    }
-    for(int i=255; i>=80; --i){
-      MotorSpeed(i, i);
-      delay(10);
-    }
-  }
+  MotorSpeed(200, 200); //80% power
 }
