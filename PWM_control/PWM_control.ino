@@ -1,19 +1,49 @@
+#define motorDIR_L 2
+#define motorPWM_L 3
+#define motorDIR_R 4
+#define motorPWM_R 11
+
 void PWM_init(){
-  pinMode(3, OUTPUT);
-  pinMode(11, OUTPUT);
+  pinMode(motorDIR_L, OUTPUT);
+  pinMode(motorPWM_L, OUTPUT);
+  pinMode(motorDIR_R, OUTPUT);
+  pinMode(motorPWM_R, OUTPUT);
   TCCR2A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
   TCCR2B = _BV(CS21);
-  OCR2A = 180;
-  OCR2B = 50;
+  OCR2A = 0;
+  OCR2B = 0;
+  digitalWrite(motorDIR_L, LOW);
+  digitalWrite(motorDIR_R, LOW);
 }
 
-void WritePWM(char A, char B, int pwm_A, int pwm_B){
-  if(A>0)OCR2A = pwm_A;
-  if(B>0)OCR2B = pwm_B;
+void WritePWM(int pwm_A, int pwm_B){
+  OCR2A = pwm_A;
+  OCR2B = pwm_B;
 }
 
-void MotorSpeed(int motor_1, int motor_2){
-  WritePWM(1,1,motor_1, motor_2);
+void MotorSpeed(int motor_L, int motor_R){
+
+  motor_L *= 2.55;
+  motor_R *= 2.55;
+  
+  if(motor_L >= 0)digitalWrite(motorDIR_L, LOW);  
+  else{
+    digitalWrite(motorDIR_L, HIGH);
+    motor_L += 255;
+  }
+  
+  if(motor_R>=0)digitalWrite(motorDIR_R, LOW);  
+  else{
+    digitalWrite(motorDIR_R, HIGH);
+    motor_R += 255;
+  }
+
+  if(motor_L>255)motor_L=255;
+  if(motor_L<0)motor_L=0;
+  if(motor_R>255)motor_R=255;
+  if(motor_R<0)motor_R=0;
+  
+  WritePWM(motor_L, motor_R);
 }
 
 void setup() {
@@ -21,5 +51,5 @@ void setup() {
 }
 
 void loop() {
-  MotorSpeed(200, 200); //80% power
+  MotorSpeed(-100, 100); //80% power
 }
