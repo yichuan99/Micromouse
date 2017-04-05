@@ -51,5 +51,5 @@ void setup() {
 }
 
 void loop() {
-  MotorSpeed(-100, 100); //80% power
+  MotorSpeed(-100, 100);
 }
