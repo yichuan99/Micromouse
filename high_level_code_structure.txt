@@ -1,0 +1,23 @@
+
+							+-----------------------+
+							|Path Planning			|
+							|Mode 1: Search Run	    |
+							|Mode 2: Speed Run      |       		
+							+-----------------------+
+								|	^
+	Next Step(Grid Location)	|	|Current Position(X,Y)---Grid location
+								|	|Wall layout
+								v	|
+							+----------------+
+							|Motion Execution|---Close loop PID
+							+----------------+
+								^			|
+						Data	|			|	Command
+								|			v
+							+-------+	+--------+
+		IR, Gyro,Encoder----|Sensors|	|Actuator|---Motor and wheels
+							+-------+	+--------+
+
+
+
+
